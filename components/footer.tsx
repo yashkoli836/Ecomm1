@@ -1,11 +1,10 @@
+import Image from 'next/image';
 import { FC } from 'react';
 
-interface Props {
-  year: number;
-}
 
-const Footer: FC<Props> = (props: Props) => {
-  const { year } = props;
+
+const Footer= () => {
+  
   return (
     <footer className="bg-black text-white py-10 justify-evenly  bottom-0 w-full">
 <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -14,7 +13,7 @@ const Footer: FC<Props> = (props: Props) => {
 {/* Logo and About */}
 <div>
 <div className="flex items-center space-x-2 mb-4">
-<img src="/NEW.png" alt="Nike Logo" className="h-6" />
+<Image src="/NEW.png" alt="Nike Logo" className="h-6" width={30} height={30} />
 <span className="text-xl font-semibold">Street Wear</span>
 </div>
 <p className="text-gray-400 text-sm mb-6">
