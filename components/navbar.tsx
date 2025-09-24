@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 import {
   ShoppingCartIcon,
   Bars3Icon,
@@ -12,8 +13,10 @@ import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
   const { items } = useCartStore();
   const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,6 +29,15 @@ export const Navbar = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+    const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (search.trim()) {
+      router.push(`/products?search=${encodeURIComponent(search)}`);
+      setSearch("");
+      setMobileOpen(false);
+    }
+  };
 
   return (
     <nav className="sticky top-0 z-50 bg-white shadow">
@@ -45,9 +57,27 @@ export const Navbar = () => {
           <Link href="/products" className="hover:text-blue-600">
             Products
           </Link>
+          <Link href="/products" className="hover:text-blue-600">
+            New Arrivals
+          </Link>
           <Link href="/checkout" className="hover:text-blue-600">
             Checkout
           </Link>
+          <form onSubmit={handleSearch} className="ml-4 flex">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search products..."
+              className="border rounded-l px-2 py-1 focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-3 py-1 rounded-r hover:bg-blue-700"
+            >
+              Search
+            </button>
+          </form>
         </div>
         <div className="flex items-center space-x-4">
           <Link href="/checkout" className="relative">
