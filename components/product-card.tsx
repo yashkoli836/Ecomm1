@@ -13,7 +13,7 @@ export const ProductCard = ({ product }: Props) => {
 
   return (
     <Link href={`/products/${product.id}`} className="block h-full">
-      <Card className="group hover:shadow-2xl transition duration-300 py-0 h-full flex flex-col border-gray-300 gap-0">
+      <Card className="group hover:shadow-2xl hover:scale-105 transition duration-300 py-0 h-full flex flex-col border-gray-300 gap-0">
         {product.images && product.images[0] && (
           <div className="relative h-60 w-full">
             <Image
@@ -21,7 +21,7 @@ export const ProductCard = ({ product }: Props) => {
               alt={product.name}
               layout="fill"
               objectFit="cover"
-              className="group-hover:opacity-90 transition-opacity duration-300 rounded-t-lg"
+              className=" transition-opacity group-hover:h-[500px] duration-500 rounded-t-lg"
             />
           </div>
         )}
@@ -39,7 +39,7 @@ export const ProductCard = ({ product }: Props) => {
               ${(price.unit_amount / 100).toFixed(2)}
             </p>
           )}
-          <Button className="mt-4 bg-black text-white">View Details</Button>
+          <Button className="mt-4 bg-black text-white hover:bg-blue-600">View Details</Button>
         </CardContent>
       </Card>
     </Link>
