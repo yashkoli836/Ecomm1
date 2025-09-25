@@ -4,6 +4,7 @@ import Stripe from "stripe";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useCartStore } from "@/store/cart-store";
+import router from "next/router";
 
 interface Props {
   product: Stripe.Product;
@@ -23,6 +24,19 @@ export const ProductDetail = ({ product }: Props) => {
       imageUrl: product.images ? product.images[0] : null,
       quantity: 1,
     });
+  };
+
+  const handleCheckout = () => {
+    
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: price.unit_amount as number,
+      imageUrl: product.images ? product.images[0] : null,
+      quantity: 1,
+    });
+    
+    router.push("/checkout");
   };
 
   return (
@@ -48,12 +62,14 @@ export const ProductDetail = ({ product }: Props) => {
             ${(price.unit_amount / 100).toFixed(2)}
           </p>
         )}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 flex-wrap">
           <Button variant="outline" onClick={() => removeItem(product.id)}>
             –
           </Button>
           <span className="text-lg font-semibold">{quantity}</span>
           <Button onClick={onAddItem}>+</Button>
+          <Button onClick={handleCheckout} className="bg-blue-500 text-white  rounded  w-full mt-4 mb-4">Buy Now</Button>
+          <Button onClick={onAddItem} className="bg-black text-white py=4 px-4 py-2 rounded w-full m-1">Add to Cart</Button>
         </div>
       </div>
     </div>
